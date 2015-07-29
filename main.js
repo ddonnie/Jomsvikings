@@ -1,26 +1,25 @@
-// We start by initializing Phaser
-// Parameters: width of the game, height of the game, how to render the game, the HTML div that will contain the game
-var game = new Phaser.Game(500, 600, Phaser.AUTO, 'game_div');
+// Initialize Phaser, and create a 400x490px game
+var game = new Phaser.Game(400, 490, Phaser.AUTO, 'gameDiv');
 
-// And now we define our first and only state, I'll call it 'main'. A state is a specific scene of a game like a menu, a game over screen, etc.
-var main_state = {
+// Create our 'main' state that will contain the game
+var mainState = {
 
-    preload: function() {
-        // Everything in this function will be executed at the beginning. That’s where we usually load the game’s assets (images, sounds, etc.)
-        game.load.image('hello', 'assets/hello.png');  
+    preload: function() { 
+        // This function will be executed at the beginning     
+        // That's where we load the game's assets  
     },
 
     create: function() { 
-        // This function will be called after the preload function. Here we set up the game, display sprites, add labels, etc.
-        this.hello_sprite = game.add.sprite(250, 300, 'hello');  
+        // This function is called after the preload function     
+        // Here we set up the game, display sprites, etc.  
     },
 
     update: function() {
-        // This is where we will spend the most of our time. This function is called 60 times per second to update the game.
-        this.hello_sprite.angle += 1;  
-    } 
-}
+        // This function is called 60 times per second    
+        // It contains the game's logic   
+    },
+};
 
-// And finally we tell Phaser to add and start our 'main' state
-game.state.add('main', main_state);  
+// Add and start the 'main' state to start the game
+game.state.add('main', mainState);  
 game.state.start('main');  
