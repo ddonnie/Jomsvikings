@@ -4,7 +4,10 @@ var game = new Phaser.Game(640, 640, Phaser.AUTO, 'gameDiv');
 var grid = 32; //tile size
 var snakeLength = 10; //initial snake length
 var snake = [];
-
+var direction = 'right';            // The direction of our snake.
+var new_direction = null;
+var speed = 0;                      // Game speed.
+var updateDelay = 0;                // A variable for control over update rates.
 
 
 // Create our 'main' state that will contain the game
@@ -55,6 +58,49 @@ var mainState = {
         new_direction = 'down';
     }
 
+    updateDelay++;
+
+    if (updateDelay % (10 - speed) == 0) {
+
+    var firstCell = snake[snake.length - 1],
+            lastCell = snake.shift(),
+            oldLastCellx = lastCell.x,
+            oldLastCelly = lastCell.y;
+
+        // If a new direction has been chosen from the keyboard, make it the direction of the snake now.
+        if(new_direction){
+            direction = new_direction;
+            new_direction = null;
+        }
+
+
+        // Change the last cell's coordinates relative to the head of the snake, according to the direction.
+
+        if(direction == 'right') {
+
+            lastCell.x = firstCell.x + 32;
+            lastCell.y = firstCell.y;
+        }
+        else if(direction == 'left'){
+            lastCell.x = firstCell.x - 32;
+            lastCell.y = firstCell.y;
+        }
+        else if(direction == 'up'){
+            lastCell.x = firstCell.x;
+            lastCell.y = firstCell.y - 32;
+        }
+        else if(direction == 'down'){
+            lastCell.x = firstCell.x;
+            lastCell.y = firstCell.y + 32;
+        }
+
+
+        // Place the last cell in the front of the stack.
+        // Mark it the first cell.
+
+        snake.push(lastCell);
+        firstCell = lastCell;
+}
 
         // This function is called 60 times per second    
         // It contains the game's logic   
